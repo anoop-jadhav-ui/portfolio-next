@@ -1,0 +1,13 @@
+.navigation {
+  list-style: none;
+  display: flex;
+}
+
+.navigation a {
+  text-decoration: none;
+}
+
+.navigation a:hover p {
+  font-weight: bold;
+  color: var(--mui-palette-primary-main);
+}

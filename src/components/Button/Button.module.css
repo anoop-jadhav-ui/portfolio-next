@@ -1,0 +1,23 @@
+button {
+  appearance: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+button.brand {
+  background-color: var(--accent-color);
+  color: white;
+  position: relative;
+}
+button.neutral {
+  border: 1px solid var(--accent-color);
+  background-color: white;
+  color: var(--accent-color);
+}
