@@ -1,9 +1,9 @@
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import ContactMeForm from "../ContactMeForm/ContactMeForm";
-import Copyright from "../Copyright/Copyright";
+import ContactMeForm from "../../organisms/ContactMeForm/ContactMeForm";
+import Copyright from "../../atoms/Copyright/Copyright";
 import { menuItems } from "../Header/Header";
-import { SocialIcons } from "../SocialIcons/SocialIcons";
+import { SocialIcons } from "../../atoms/SocialIcons/SocialIcons";
 import S from "./Footer.module.css";
 
 export default function Footer() {

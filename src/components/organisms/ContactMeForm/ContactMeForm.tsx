@@ -14,8 +14,8 @@ import SendIcon from "@mui/icons-material/Send";
 export default function ContactMeForm() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-
   const [isSendingMessage, setIsSendingMessage] = useState(false);
+
   const { showBanner } = useAlertBanner();
 
   const sendMessage = async () => {

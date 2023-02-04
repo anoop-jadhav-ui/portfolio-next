@@ -1,3 +1,5 @@
+import HighlightedRecentArticle from "@/components/molecules/HighlightedRecentArticle/HighlightedRecentArticle";
+import RecentArticleCard from "@/components/molecules/RecentArticleCard/RecentArticleCard";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import {
   Box,
@@ -8,8 +10,6 @@ import {
   useTheme,
 } from "@mui/material";
 import Link from "next/link";
-import HighlightedRecentArticle from "../HighlightedRecentArticle/HighlightedRecentArticle";
-import RecentArticleCard from "../RecentArticleCard/RecentArticleCard";
 export default function RecentArticles() {
   const theme = useTheme();
   return (

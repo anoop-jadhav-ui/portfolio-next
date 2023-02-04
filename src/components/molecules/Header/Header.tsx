@@ -1,8 +1,8 @@
+import AlertBanner from "@/components/atoms/AlertBanner/AlertBanner";
+import Logo from "@/components/atoms/Logo/Logo";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
 import Link from "next/link";
-import AlertBanner from "../AlertBanner/AlertBanner";
-import Logo from "../Logo/Logo";
 import S from "./Header.module.css";
 
 interface MenuItem {

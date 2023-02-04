@@ -1,4 +1,3 @@
-import theme from "@/mui/theme";
 import {
   Box,
   Card,

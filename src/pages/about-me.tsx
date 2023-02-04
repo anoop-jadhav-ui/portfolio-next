@@ -1,8 +1,9 @@
-import AboutMePageHeader from "@/components/AboutMePageHeader/AboutMePageHeader";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
-import { DummyImage } from "@/components/RecentArticleCard/RecentArticleCard";
-import { SocialIcons } from "@/components/SocialIcons/SocialIcons";
+import { SocialIcons } from "@/components/atoms/SocialIcons/SocialIcons";
+import AboutMePageHeader from "@/components/molecules/AboutMePageHeader/AboutMePageHeader";
+import Footer from "@/components/molecules/Footer/Footer";
+import Header from "@/components/molecules/Header/Header";
+import { DummyImage } from "@/components/molecules/RecentArticleCard/RecentArticleCard";
+
 import { useProfileDataContext } from "@/contexts/ProfileDataContext";
 import {
   Box,
