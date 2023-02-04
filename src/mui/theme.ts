@@ -1,4 +1,4 @@
-import { Button, colors } from "@mui/material";
+import { colors } from "@mui/material";
 import { experimental_extendTheme as extendTheme } from "@mui/material/styles";
 import { Poppins, Zilla_Slab } from "@next/font/google";
 
@@ -14,12 +14,14 @@ export const zillaSlab = Zilla_Slab({
   variable: "--font-zilla",
 });
 
+const PRIMARY_COLOR = colors.red[500];
+
 const theme = extendTheme({
   colorSchemes: {
     light: {
       palette: {
         primary: {
-          main: "#f24236",
+          main: PRIMARY_COLOR,
         },
         text: {
           primary: "black",
@@ -30,7 +32,7 @@ const theme = extendTheme({
     dark: {
       palette: {
         primary: {
-          main: "#f24236",
+          main: PRIMARY_COLOR,
         },
         text: {
           primary: "white",

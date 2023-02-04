@@ -1,14 +1,22 @@
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import { Button, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import Image from "next/image";
 import S from "./Summary.module.css";
 export default function Summary() {
+  const theme = useTheme();
   return (
-    <Container component="article">
-      <Grid container sx={{ pt: 8, pb: 12 }} maxWidth="lg">
-        <Grid item xs={4}></Grid>
-        <Grid item xs={8}>
-          <Stack sx={{ p: 1 }}>
+    <Container component="article" maxWidth="lg">
+      <Grid container alignItems="center">
+        <Grid item xs={6} className={S.SummaryContent}>
+          <Stack sx={{ pl: 4 }}>
             <Typography variant="h5" color="text.secondary">
               Hello,
             </Typography>
@@ -37,6 +45,7 @@ export default function Summary() {
                   variant="contained"
                   disableElevation
                   sx={{ mt: 2 }}
+                  size="large"
                 >
                   Download CV
                 </Button>
@@ -48,12 +57,29 @@ export default function Summary() {
                   variant="outlined"
                   disableElevation
                   sx={{ mt: 2 }}
+                  size="large"
                 >
                   Know Me
                 </Button>
               </Grid>
             </Grid>
           </Stack>
+        </Grid>
+        <Grid item xs={6} className={S.profilePicWrapper}>
+          <Image
+            className={S.blob}
+            src="/assets/images/blob.svg"
+            width={850}
+            height={759}
+            alt="Profile picture blob"
+          />
+          <Image
+            className={S.profilePic}
+            src="/assets/images/ProfilePic.png"
+            alt="profile picture"
+            width={560}
+            height={625}
+          />
         </Grid>
       </Grid>
     </Container>

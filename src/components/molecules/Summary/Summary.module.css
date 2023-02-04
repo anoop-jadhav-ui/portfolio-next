@@ -1,0 +1,17 @@
+.profilePicWrapper {
+  position: relative;
+  top: 0px;
+}
+
+.blob {
+  position: absolute;
+  top: 150px;
+  left: -100px;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.profilePic {
+  position: relative;
+  top: 7px;
+}
