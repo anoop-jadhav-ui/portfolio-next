@@ -1,3 +1,4 @@
+import GlobalContextProvider from "@/providers/GlobalContextProvider";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import {
@@ -49,7 +50,9 @@ export default function MyApp(props: MyAppProps) {
         </style>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <GlobalContextProvider>
+          <Component {...pageProps} />
+        </GlobalContextProvider>
       </CssVarsProvider>
     </CacheProvider>
   );

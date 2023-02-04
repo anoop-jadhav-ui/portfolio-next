@@ -2,6 +2,7 @@ import AboutMePageHeader from "@/components/AboutMePageHeader/AboutMePageHeader"
 import Footer, { SocialIcons } from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { DummyImage } from "@/components/RecentArticleCard/RecentArticleCard";
+import { useProfileDataContext } from "@/contexts/ProfileDataContext";
 import {
   Box,
   Container,
@@ -30,6 +31,9 @@ export const CompanyDetails = () => {
 };
 export default function Blogs() {
   const theme = useTheme();
+  const { profileData } = useProfileDataContext();
+  console.log(profileData);
+
   return (
     <Stack>
       <Header />
