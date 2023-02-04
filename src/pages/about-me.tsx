@@ -1,7 +1,8 @@
 import AboutMePageHeader from "@/components/AboutMePageHeader/AboutMePageHeader";
-import Footer, { SocialIcons } from "@/components/Footer/Footer";
+import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { DummyImage } from "@/components/RecentArticleCard/RecentArticleCard";
+import { SocialIcons } from "@/components/SocialIcons/SocialIcons";
 import { useProfileDataContext } from "@/contexts/ProfileDataContext";
 import {
   Box,

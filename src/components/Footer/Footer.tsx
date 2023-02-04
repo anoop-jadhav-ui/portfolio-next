@@ -1,76 +1,12 @@
-import { useAlertBanner } from "@/contexts/AlertBannerContext";
-import { axiosInstance } from "@/helpers/axios";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import SendIcon from "@mui/icons-material/Send";
-import {
-  CircularProgress,
-  Container,
-  Fab,
-  Grid,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+import ContactMeForm from "../ContactMeForm/ContactMeForm";
 import Copyright from "../Copyright/Copyright";
 import { menuItems } from "../Header/Header";
+import { SocialIcons } from "../SocialIcons/SocialIcons";
 import S from "./Footer.module.css";
 
-export function SocialIcons() {
-  return (
-    <Stack direction="row" sx={{ pt: 2, position: "relative", left: -12 }}>
-      <IconButton>
-        <InstagramIcon color="primary" />
-      </IconButton>
-      <IconButton>
-        <LinkedInIcon color="primary" />
-      </IconButton>
-      <IconButton>
-        <GitHubIcon color="primary" />
-      </IconButton>
-      <IconButton>
-        <AlternateEmailIcon color="primary" />
-      </IconButton>
-    </Stack>
-  );
-}
-
 export default function Footer() {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-
-  const [isSendingMessage, setIsSendingMessage] = useState(false);
-  const { showBanner } = useAlertBanner();
-
-  const sendMessage = async () => {
-    try {
-      setIsSendingMessage(true);
-      const response = await axiosInstance.post("/api/mail", {
-        userEmail: "anoopjadhav@gmail.com",
-        userMessage: message,
-        userName: name,
-      });
-      if (response.data.msg === "success") {
-        showBanner("Message sent successfully!", "success");
-      } else {
-        showBanner(
-          "Failed to send the message. Please try again later.",
-          "error"
-        );
-      }
-    } catch (e) {
-      showBanner("Failed to send the message.", "error");
-      console.log(e);
-    } finally {
-      setIsSendingMessage(false);
-    }
-  };
-
   return (
     <Container component="footer">
       <Grid container sx={{ pt: 8, pb: 3 }} maxWidth="lg">
@@ -97,42 +33,7 @@ export default function Footer() {
           </Stack>
         </Grid>
         <Grid item xs={4}>
-          <Stack spacing={0.5}>
-            <Typography variant="subtitle2">Contact me</Typography>
-
-            <TextField
-              value={name}
-              label="Your name"
-              id="feedback-name"
-              size="small"
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              value={message}
-              id="feedback-body"
-              multiline
-              rows={3}
-              label="Your message"
-              placeholder=""
-              onChange={(e) => setMessage(e.target.value)}
-              helperText="Feel free to share a constructive feedback."
-            />
-            <Grid container justifyContent="flex-end">
-              <Fab
-                disabled={!(name && message)}
-                size="small"
-                aria-label="send"
-                onClick={sendMessage}
-                color="primary"
-              >
-                {isSendingMessage ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : (
-                  <SendIcon color="inherit" fontSize="inherit" />
-                )}
-              </Fab>
-            </Grid>
-          </Stack>
+          <ContactMeForm />
         </Grid>
       </Grid>
     </Container>
