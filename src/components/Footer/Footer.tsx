@@ -49,7 +49,7 @@ export default function Footer() {
   const sendMessage = async () => {
     try {
       setIsSendingMessage(true);
-      const res = await fetch("https://api.anoopjadhav.in/mail", {
+      const res = await fetch(process.env.NEXT_PUBLIC_MAIL_SERVER_URL!, {
         method: "POST",
         body: JSON.stringify({
           userEmail: "anoopjadhav@gmail.com",
