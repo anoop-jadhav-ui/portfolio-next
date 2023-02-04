@@ -1,4 +1,5 @@
 import { useAlertBanner } from "@/contexts/AlertBannerContext";
+import { axiosInstance } from "@/helpers/axios";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -49,20 +50,12 @@ export default function Footer() {
   const sendMessage = async () => {
     try {
       setIsSendingMessage(true);
-      const res = await fetch(process.env.NEXT_PUBLIC_MAIL_SERVER_URL!, {
-        method: "POST",
-        body: JSON.stringify({
-          userEmail: "anoopjadhav@gmail.com",
-          userMessage: message,
-          userName: name,
-        }),
-        headers: {
-          "Context-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
+      const response = await axiosInstance.post("/api/mail", {
+        userEmail: "anoopjadhav@gmail.com",
+        userMessage: message,
+        userName: name,
       });
-      const response = await res.json();
-      if (response.msg === "success") {
+      if (response.data.msg === "success") {
         showBanner("Message sent successfully!", "success");
       } else {
         showBanner(
