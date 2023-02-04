@@ -1,6 +1,7 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
 import Link from "next/link";
+import AlertBanner from "../AlertBanner/AlertBanner";
 import Logo from "../Logo/Logo";
 import S from "./Header.module.css";
 
@@ -26,6 +27,7 @@ export const menuItems: MenuItem[] = [
 export default function Header() {
   return (
     <Container maxWidth="lg" component="header">
+      <AlertBanner />
       <Grid
         container
         justifyContent="space-between"

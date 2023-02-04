@@ -1,10 +1,11 @@
+import { useAlertBanner } from "@/contexts/AlertBannerContext";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import SendIcon from "@mui/icons-material/Send";
-import { LoadingButton } from "@mui/lab";
 import {
+  CircularProgress,
   Container,
   Fab,
   Grid,
@@ -41,7 +42,9 @@ export function SocialIcons() {
 export default function Footer() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+
   const [isSendingMessage, setIsSendingMessage] = useState(false);
+  const { showBanner } = useAlertBanner();
 
   const sendMessage = async () => {
     try {
@@ -59,8 +62,16 @@ export default function Footer() {
         },
       });
       const response = await res.json();
-      console.log(response);
+      if (response.msg === "success") {
+        showBanner("Message sent successfully!", "success");
+      } else {
+        showBanner(
+          "Failed to send the message. Please try again later.",
+          "error"
+        );
+      }
     } catch (e) {
+      showBanner("Failed to send the message.", "error");
       console.log(e);
     } finally {
       setIsSendingMessage(false);
@@ -95,12 +106,12 @@ export default function Footer() {
         <Grid item xs={4}>
           <Stack spacing={0.5}>
             <Typography variant="subtitle2">Contact me</Typography>
+
             <TextField
               value={name}
               label="Your name"
               id="feedback-name"
               size="small"
-              placeholder="Rahul Sharma"
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
@@ -109,20 +120,24 @@ export default function Footer() {
               multiline
               rows={3}
               label="Your message"
-              placeholder="Feel free to share a constructive feedback."
+              placeholder=""
               onChange={(e) => setMessage(e.target.value)}
+              helperText="Feel free to share a constructive feedback."
             />
             <Grid container justifyContent="flex-end">
-              <LoadingButton
-                size="medium"
-                loading={isSendingMessage}
-                variant="outlined"
+              <Fab
+                disabled={!(name && message)}
+                size="small"
+                aria-label="send"
                 onClick={sendMessage}
-                loadingPosition="center"
-                endIcon={<SendIcon />}
+                color="primary"
               >
-                Send
-              </LoadingButton>
+                {isSendingMessage ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : (
+                  <SendIcon color="inherit" fontSize="inherit" />
+                )}
+              </Fab>
             </Grid>
           </Stack>
         </Grid>
