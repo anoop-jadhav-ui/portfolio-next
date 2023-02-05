@@ -1,5 +1,5 @@
 import { initializeApp } from "@firebase/app";
-import { getAnalytics, Analytics } from "@firebase/analytics";
+// import { getAnalytics, Analytics } from "@firebase/analytics";
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_APP_FIREBASE_KEY,
@@ -14,10 +14,10 @@ const config = {
 
 const firebaseApp = initializeApp(config);
 
-let analytics: Analytics | undefined = undefined;
+// let analytics: Analytics | undefined = undefined;
 
-if (process.env.NODE_ENV === "production")
-  analytics = getAnalytics(firebaseApp);
+// if (process.env.NODE_ENV === "production")
+//   analytics = getAnalytics(firebaseApp);
 
-export { analytics };
+// export { analytics };
 export default firebaseApp;

@@ -29,24 +29,13 @@ export default function Summary() {
           <Grid item xs={6} className={S.SummaryContent}>
             <Stack sx={{ pl: 4 }}>
               <Typography variant="h5" color="text.secondary">
-                Hello,
+                Hello, I am
               </Typography>
-              <Typography variant="h1" color="text.primary" fontSize={44}>
-                I am Anoop Jadhav
+              <Typography variant="h1" color="text.primary" fontSize={64}>
+                Anoop Jadhav
               </Typography>
               <Typography variant="h2" color="primary" fontSize={32}>
                 UI Developer
-              </Typography>
-              <Typography
-                variant="body1"
-                color="text.primary"
-                sx={{ mt: 1 }}
-                className={S.bodyText}
-              >
-                with 5 years of experience in UI Development and Design using
-                tools and technologies like HTML, CSS, JavaScript, Vue Js,
-                Salesforce Lightning, Adobe Illustrator, Figma, Sketch and
-                Invision.
               </Typography>
               <Grid container spacing={1}>
                 <Grid item>
