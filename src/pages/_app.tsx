@@ -11,6 +11,7 @@ import Head from "next/head";
 import createEmotionCache from "../mui/createEmotionCache";
 import theme from "../mui/theme";
 import "./commonStyles.css";
+import { motion, useScroll } from "framer-motion";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -34,6 +35,7 @@ interface MyAppProps extends AppProps {
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const extendedTheme = extendTheme();
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>

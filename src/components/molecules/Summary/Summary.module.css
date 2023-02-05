@@ -1,13 +1,18 @@
+.summaryContainer {
+  position: relative;
+  overflow: hidden;
+}
 .profilePicWrapper {
   position: relative;
-  top: 0px;
 }
 
 .blob {
   position: absolute;
-  top: 150px;
-  left: -100px;
-  border-radius: 50%;
+  bottom: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+
   z-index: -1;
 }
 
