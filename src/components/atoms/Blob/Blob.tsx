@@ -28,7 +28,7 @@ const Blob = (props: {
       );
       blobRef.current.innerHTML = svgString;
     }
-  }, []);
+  }, [props.bgColor, props.strokeColor, props.width]);
 
   const { scrollYProgress } = useScroll();
 

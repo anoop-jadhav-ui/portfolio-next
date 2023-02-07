@@ -25,7 +25,7 @@ const theme = extendTheme({
         },
         text: {
           primary: "black",
-          secondary: colors.grey[400],
+          secondary: colors.grey[500],
         },
       },
     },
@@ -36,7 +36,7 @@ const theme = extendTheme({
         },
         text: {
           primary: "white",
-          secondary: colors.grey[600],
+          secondary: colors.grey[500],
         },
       },
     },

@@ -21,6 +21,8 @@
     "blobs": "^2.2.1-beta.1",
     "firebase": "^9.17.1",
     "framer-motion": "^9.0.1",
+    "html-react-parser": "^3.0.8",
+    "moment": "^2.29.4",
     "next": "13.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
