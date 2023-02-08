@@ -6,24 +6,20 @@ export const EducationDetailsComponent = ({
   education,
 }: {
   education: EducationDetails;
-}) => {
-  const theme = useTheme();
-
-  return (
-    <Grid container spacing={0.5}>
-      <Grid item xs={12}>
-        <Typography variant="h5" color="text.primary" sx={{ pt: 1 }}>
-          {education.institute}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="body1" color="text.secondary">
-          {education.type}
-        </Typography>
-      </Grid>
+}) => (
+  <Grid container spacing={0.5}>
+    <Grid item xs={12}>
+      <Typography variant="h5" color="text.primary" sx={{ pt: 1 }}>
+        {education.institute}
+      </Typography>
     </Grid>
-  );
-};
+    <Grid item xs={12}>
+      <Typography variant="body1" color="text.secondary">
+        {education.type}
+      </Typography>
+    </Grid>
+  </Grid>
+);
 
 export default function Education() {
   const {

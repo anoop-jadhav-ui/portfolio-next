@@ -74,7 +74,7 @@ export default function Summary() {
               alt="profile picture"
               width={560}
               height={625}
-              quality={100}
+              quality={70}
               priority={true}
             />
           </Grid>

@@ -1,7 +1,6 @@
 import { SocialIcons } from "@/components/atoms/SocialIcons/SocialIcons";
 import { useProfileDataContext } from "@/contexts/ProfileDataContext";
-import { Chip, colors, Container, Grid, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Chip, Container, Grid, Typography } from "@mui/material";
 import parse from "html-react-parser";
 import moment from "moment";
 import Image from "next/image";
@@ -42,6 +41,7 @@ export function SummarySection() {
             width={350}
             height={350}
             alt="profile pic"
+            priority={true}
           />
         </Grid>
         <Grid item>

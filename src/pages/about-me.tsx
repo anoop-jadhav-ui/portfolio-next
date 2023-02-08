@@ -17,7 +17,10 @@ export default function AboutMe({ profileData }: { profileData: ProfileData }) {
   const { loadProfileData } = useProfileDataContext();
 
   useEffect(() => {
-    loadProfileData(profileData);
+    (async () => {
+      const profileData = await fetchProfileData();
+      loadProfileData(profileData);
+    })();
   }, []);
 
   return (
@@ -44,7 +47,7 @@ export default function AboutMe({ profileData }: { profileData: ProfileData }) {
   );
 }
 
-AboutMe.getInitialProps = async () => {
-  const profileData = await fetchProfileData();
-  return { profileData };
-};
+// AboutMe.getInitialProps = async () => {
+//   const profileData = await fetchProfileData();
+//   return { profileData };
+// };
