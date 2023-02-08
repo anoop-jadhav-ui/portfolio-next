@@ -1,15 +1,15 @@
-import parse from "html-react-parser";
 import { SocialIcons } from "@/components/atoms/SocialIcons/SocialIcons";
 import { useProfileDataContext } from "@/contexts/ProfileDataContext";
-import { Container, Grid, Typography } from "@mui/material";
+import { Chip, colors, Container, Grid, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+import parse from "html-react-parser";
 import moment from "moment";
-import { useMemo } from "react";
-import { DummyImage } from "../RecentArticleCard/RecentArticleCard";
 import Image from "next/image";
+import { useMemo } from "react";
 
 export function SummarySection() {
   const {
-    profileData: { overview, experience },
+    profileData: { overview, experience, skills },
   } = useProfileDataContext();
 
   const totalExperience = useMemo((): string => {
@@ -28,34 +28,54 @@ export function SummarySection() {
     }
   }, [experience]);
 
+  const allSkills = [
+    ...skills.development.map((skill) => skill.skillName),
+    ...skills.design.map((skill) => skill.skillName),
+  ];
+
   return (
     <Container component="article">
       <Grid container spacing={2} alignItems="center" flexWrap="nowrap">
         <Grid item>
           <Image
             src="/assets/images/AboutMePic.png"
-            width={512 / 1.5}
-            height={587 / 1.5}
+            width={350}
+            height={350}
             alt="profile pic"
           />
         </Grid>
         <Grid item>
-          <Typography variant="h2" color="text.primary" sx={{ pt: 1 }}>
-            {overview.name}
-          </Typography>
-          <Typography
-            variant="body1"
-            fontSize={20}
-            color="text.primary"
-            sx={{ pt: 1 }}
-          >
-            {parse(
-              overview.summary.replace(
-                "{totalYearsOfExperience}",
-                totalExperience
-              )
-            )}
-          </Typography>
+          <Grid container spacing={1}>
+            <Grid item>
+              <Typography variant="h2" color="text.primary" sx={{ pt: 1 }}>
+                {overview.name}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body1" fontSize={20} color="text.primary">
+                {parse(
+                  overview.summary.replace(
+                    "{totalYearsOfExperience}",
+                    totalExperience
+                  )
+                )}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Grid container spacing={0.5} sx={{ pt: 0.5 }}>
+                {allSkills.map((skill) => (
+                  <Grid item key={skill}>
+                    <Chip
+                      label={skill}
+                      variant="filled"
+                      size="small"
+                      color="default"
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
           <SocialIcons />
         </Grid>
       </Grid>

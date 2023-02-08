@@ -1,12 +1,11 @@
 import { useProfileDataContext } from "@/contexts/ProfileDataContext";
 import { ExperienceDetails } from "@/types/profileDataTypes";
 import {
+  Box,
   Container,
+  Grid,
   Stack,
   Typography,
-  Grid,
-  MobileStepper,
-  Box,
   useTheme,
 } from "@mui/material";
 import moment from "moment";
@@ -88,7 +87,6 @@ export default function WorkExperience() {
   const {
     profileData: { experience },
   } = useProfileDataContext();
-  console.log(experience);
   return (
     <Container component="article">
       <Stack>

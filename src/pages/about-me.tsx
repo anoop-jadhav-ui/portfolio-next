@@ -1,3 +1,6 @@
+import Certifications from "@/components/molecules/AboutMe/Certifications";
+import Education from "@/components/molecules/AboutMe/Education";
+import Hobbies from "@/components/molecules/AboutMe/Hobbies";
 import { SummarySection } from "@/components/molecules/AboutMe/SummarySection";
 import WorkExperience from "@/components/molecules/AboutMe/WorkExperience";
 import AboutMePageHeader from "@/components/molecules/AboutMePageHeader/AboutMePageHeader";
@@ -26,6 +29,15 @@ export default function AboutMe({ profileData }: { profileData: ProfileData }) {
       </Box>
       <Box sx={{ py: 4 }}>
         <WorkExperience />
+      </Box>
+      <Box sx={{ background: theme.palette.grey[100], pt: 4, pb: 8 }}>
+        <Education />
+      </Box>
+      <Box sx={{ py: 4 }}>
+        <Certifications />
+      </Box>
+      <Box sx={{ background: theme.palette.grey[100], pt: 4, pb: 8 }}>
+        <Hobbies />
       </Box>
       <Footer />
     </Stack>
