@@ -1,4 +1,4 @@
-import Blob from "@/components/atoms/Blob/Blob";
+import AnimatedBlob from "@/components/atoms/Blob/AnimatedBlob";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import {
@@ -11,17 +11,11 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useScroll, useTime, useTransform } from "framer-motion";
 import Image from "next/image";
 import S from "./Summary.module.css";
 
 export default function Summary() {
   const theme = useTheme();
-  const { scrollYProgress } = useScroll();
-
-  const time = useTime();
-  const x = useTransform(time, [0, 10], [0, 10], { clamp: false });
-
   return (
     <Box className={S.summaryContainer}>
       <Container component="article" maxWidth="lg">
@@ -66,11 +60,12 @@ export default function Summary() {
             </Stack>
           </Grid>
           <Grid item xs={6} className={S.profilePicWrapper}>
-            <Blob
-              class={S.blob}
+            <AnimatedBlob
+              classname={S.blob}
               bgColor={colors.red[100]}
-              width={800}
+              width={900}
               height={500}
+              duration={10000}
             />
 
             <Image
@@ -80,6 +75,7 @@ export default function Summary() {
               width={560}
               height={625}
               quality={100}
+              priority={true}
             />
           </Grid>
         </Grid>

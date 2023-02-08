@@ -1,6 +1,7 @@
 import * as blobs2 from "blobs/v2";
 import { useScroll } from "framer-motion";
 import { useEffect, useRef } from "react";
+import * as blobs2Animate from "blobs/v2/animate";
 
 const Blob = (props: {
   class: string;
