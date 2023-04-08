@@ -6,28 +6,60 @@ import {
   useGLTF,
 } from "@react-three/drei";
 import { Canvas, GroupProps } from "@react-three/fiber";
-import { useControls } from "leva";
-import { Suspense, useRef } from "react";
-import { Group, PerspectiveCamera, Vector3 } from "three";
+import { Leva, useControls } from "leva";
+import { useRouter } from "next/router";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Euler, Group, PerspectiveCamera, Vector3 } from "three";
 import S from "./Summary.module.css";
 
-const cameraPosition = new Vector3(5, 1, 12);
-const modelPosition = new Vector3(5, -1, 0);
+const cameraPosition = new Vector3(0, 0, 1);
+const model = {
+  position: new Vector3(5, -1.5, -10),
+  rotation: new Euler(0, -Math.PI / 6, 0),
+};
 
-export default function SymmaryPageModel() {
+function SummaryPageModel() {
+  const [isDebugMode, setDebugMode] = useState(false);
   const { name, aNumber } = useControls({ name: "World", aNumber: 0 });
 
   const modelRef = useRef<Group>(null);
   const cameraRef = useRef<PerspectiveCamera>(null);
+  const router = useRouter();
+
+  useLayoutEffect(() => {
+    if (window.location.hash.search("debug") != -1) {
+      console.log("🛠️ %cdebug mode is %cON", "color:white", "color:red");
+      setDebugMode(true);
+    } else {
+      console.log("🛠️ %cdebug mode is %cOFF", "color:white", "color:green");
+      setDebugMode(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onHashChanged = (e: HashChangeEvent) => {
+      if (e.newURL.search("debug") != -1) {
+        console.log("🛠️ %cdebug mode is %cON", "color:white", "color:red");
+        setDebugMode(true);
+      } else {
+        console.log("🛠️ %cdebug mode is %cOFF", "color:white", "color:green");
+        setDebugMode(false);
+      }
+    };
+    window.addEventListener("hashchange", onHashChanged);
+    return () => {
+      window.removeEventListener("hashchange", onHashChanged);
+    };
+  }, [router.events]);
 
   return (
     <Grid item xs={4} className={S.profilePicWrapper}>
+      <Leva hidden={!isDebugMode} />
       <Canvas
         style={{
           height: "100%",
           position: "absolute",
           width: "100%",
-          border: "1px solid yellowgreen",
           left: 0,
           top: 0,
           zIndex: "-1",
@@ -40,7 +72,11 @@ export default function SymmaryPageModel() {
           intensity={2}
         />
         <Suspense fallback={<Loader />}>
-          <Model position={modelPosition} ref={modelRef} />
+          <Model
+            position={model.position}
+            ref={modelRef}
+            rotation={model.rotation}
+          />
           <DreiPerspectiveCamera
             makeDefault
             position={cameraPosition}
@@ -370,3 +406,5 @@ export function Model(props: GroupProps) {
 }
 
 useGLTF.preload("/assets/3dmodels/portfolio.glb");
+
+export default SummaryPageModel;
