@@ -1,10 +1,8 @@
 import BlogPageHeader from "@/components/molecules/BlogPageHeader/BlogPageHeader";
 import Footer from "@/components/molecules/Footer/Footer";
 import Header from "@/components/molecules/Header/Header";
-
 import HighlightedBlog from "@/components/molecules/HighlightedBlog/HighlightedBlog";
 import RecentArticleCard from "@/components/molecules/RecentArticleCard/RecentArticleCard";
-
 import { Box, Container, Grid, Stack, useTheme } from "@mui/material";
 
 export default function Blogs() {
@@ -13,7 +11,7 @@ export default function Blogs() {
     <Stack>
       <Header />
       <BlogPageHeader />
-      <Box sx={{ background: theme.palette.grey[100], py: 4 }}>
+      <Box component="div" sx={{ background: theme.palette.grey[100], py: 4 }}>
         <Container component="article">
           <Grid container>
             <Grid item>

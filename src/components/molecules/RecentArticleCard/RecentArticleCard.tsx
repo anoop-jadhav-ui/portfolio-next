@@ -10,7 +10,12 @@ import {
 
 export const DummyImage = () => {
   const theme = useTheme();
-  return <Box sx={{ height: 200, background: theme.palette.grey["300"] }} />;
+  return (
+    <Box
+      component="div"
+      sx={{ height: 200, background: theme.palette.grey["300"] }}
+    />
+  );
 };
 
 export default function RecentArticleCard() {
