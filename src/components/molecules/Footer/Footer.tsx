@@ -14,7 +14,7 @@ export default function Footer() {
           <Stack>
             <Typography variant="h3">Anoop Jadhav</Typography>
             <Typography variant="h3" sx={{ pt: 0.5 }} color="text.secondary">
-              {"Let's create a better UI."}
+              {"Let's create better UI."}
             </Typography>
             <SocialIcons />
             <Copyright sx={{ pt: 8 }} />

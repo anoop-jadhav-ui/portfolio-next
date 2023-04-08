@@ -1,47 +1,44 @@
-import AnimatedBlob from "@/components/atoms/Blob/AnimatedBlob";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import {
-  Box,
-  Button,
-  colors,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import Image from "next/image";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import S from "./Summary.module.css";
+import SummaryPageModel from "./SummaryPageModel";
 
 export default function Summary() {
-  const theme = useTheme();
   return (
     <Box className={S.summaryContainer}>
       <Container component="article" maxWidth="lg">
         <Grid container alignItems="center">
-          <Grid item xs={6} className={S.SummaryContent}>
-            <Stack sx={{ pl: 4 }}>
-              <Typography variant="h5" color="text.secondary">
-                Hello, I am
+          <Grid item xs={8} className={S.SummaryContent}>
+            <Stack sx={{ pl: 2 }}>
+              <Typography
+                variant="h3"
+                color="text.primary"
+                fontSize={60}
+                lineHeight={1}
+              >
+                Crafting Intuitive Interfaces for the Digital World
               </Typography>
-              <Typography variant="h1" color="text.primary" fontSize={64}>
-                Anoop Jadhav
-              </Typography>
-              <Typography variant="h2" color="primary" fontSize={32}>
-                UI Developer
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                fontSize={18}
+                lineHeight={1.3}
+                pt={1}
+              >
+                I can turn your Ideas into Innovative Web Apps.
               </Typography>
               <Grid container spacing={1}>
                 <Grid item>
                   <Button
-                    endIcon={<FileDownloadIcon />}
+                    endIcon={<ArticleOutlinedIcon />}
                     color="primary"
                     variant="contained"
                     disableElevation
                     sx={{ mt: 2 }}
                     size="large"
                   >
-                    Download CV
+                    Resume
                   </Button>
                 </Grid>
                 <Grid item>
@@ -59,25 +56,7 @@ export default function Summary() {
               </Grid>
             </Stack>
           </Grid>
-          <Grid item xs={6} className={S.profilePicWrapper}>
-            <AnimatedBlob
-              classname={S.blob}
-              bgColor={colors.red[100]}
-              width={900}
-              height={500}
-              duration={10000}
-            />
-
-            <Image
-              className={S.profilePic}
-              src="/assets/images/ProfilePic.png"
-              alt="profile picture"
-              width={560}
-              height={625}
-              quality={70}
-              priority={true}
-            />
-          </Grid>
+          <SummaryPageModel />
         </Grid>
       </Container>
     </Box>

@@ -108,18 +108,17 @@ const theme = extendTheme({
       },
       styleOverrides: {
         root: {
-          borderRadius: 0,
           textDecoration: "none",
         },
       },
     },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          borderRadius: 0,
-        },
-      },
-    },
+    // MuiOutlinedInput: {
+    //   styleOverrides: {
+    //     root: {
+    //       // borderRadius: 0,
+    //     },
+    //   },
+    // },
   },
 });
 
