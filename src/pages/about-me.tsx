@@ -21,25 +21,31 @@ export default function AboutMe({ profileData }: { profileData: ProfileData }) {
       const profileData = await fetchProfileData();
       loadProfileData(profileData);
     })();
-  }, []);
+  }, [loadProfileData]);
 
   return (
     <Stack>
       <Header />
       <AboutMePageHeader />
-      <Box sx={{ background: theme.palette.grey[100], py: 4 }}>
+      <Box component="div" sx={{ bgcolor: theme.palette.grey[100], py: 4 }}>
         <SummarySection />
       </Box>
-      <Box sx={{ py: 4 }}>
+      <Box component="div" sx={{ py: 4 }}>
         <WorkExperience />
       </Box>
-      <Box sx={{ background: theme.palette.grey[100], pt: 4, pb: 8 }}>
+      <Box
+        component="div"
+        sx={{ background: theme.palette.grey[100], pt: 4, pb: 8 }}
+      >
         <Education />
       </Box>
-      <Box sx={{ py: 4 }}>
+      <Box component="div" sx={{ py: 4 }}>
         <Certifications />
       </Box>
-      <Box sx={{ background: theme.palette.grey[100], pt: 4, pb: 8 }}>
+      <Box
+        component="div"
+        sx={{ background: theme.palette.grey[100], pt: 4, pb: 8 }}
+      >
         <Hobbies />
       </Box>
       <Footer />

@@ -6,7 +6,7 @@ import SummaryPageModel from "./SummaryPageModel";
 
 export default function Summary() {
   return (
-    <Box className={S.summaryContainer}>
+    <Box component="div" className={S.summaryContainer}>
       <Container component="article" maxWidth="lg">
         <Grid container alignItems="center">
           <Grid item xs={8} className={S.SummaryContent}>

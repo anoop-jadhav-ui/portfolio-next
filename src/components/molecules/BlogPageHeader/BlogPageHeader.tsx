@@ -19,7 +19,7 @@ export default function BlogPageHeader() {
         <Typography variant="h2" color="text.secondary" sx={{ pt: 1 }}>
           Search for the post that interests you
         </Typography>
-        <Box sx={{ pt: 2 }}>
+        <Box component="div" sx={{ pt: 2 }}>
           <FormControl variant="standard" hiddenLabel={true}>
             <OutlinedInput
               id="search"

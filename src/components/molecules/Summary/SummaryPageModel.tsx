@@ -5,7 +5,7 @@ import {
   PerspectiveCamera as DreiPerspectiveCamera,
   useGLTF,
 } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, GroupProps } from "@react-three/fiber";
 import { useControls } from "leva";
 import { Suspense, useRef } from "react";
 import { Group, PerspectiveCamera, Vector3 } from "three";
@@ -53,8 +53,8 @@ export default function SymmaryPageModel() {
   );
 }
 
-export function Model(props) {
-  const { nodes, materials } = useGLTF("/assets/3dmodels/portfolio.glb");
+export function Model(props: GroupProps) {
+  const { nodes, materials } = useGLTF("/assets/3dmodels/portfolio.glb") as any;
 
   return (
     <group {...props} dispose={null}>
