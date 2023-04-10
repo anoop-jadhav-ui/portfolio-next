@@ -1,99 +1,94 @@
 import { Loader } from "@/components/atoms/3DLoader/3DLoader";
-import { Grid } from "@mui/material";
+import { useDebugger } from "@/hooks/useDebugger";
 import {
   OrbitControls,
   PerspectiveCamera as DreiPerspectiveCamera,
+  SoftShadows,
   useGLTF,
 } from "@react-three/drei";
-import { Canvas, GroupProps } from "@react-three/fiber";
-import { Leva, useControls } from "leva";
-import { useRouter } from "next/router";
-import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Euler, Group, PerspectiveCamera, Vector3 } from "three";
-import S from "./Summary.module.css";
+import { GroupProps } from "@react-three/fiber";
+import { useControls } from "leva";
+import {
+  ForwardedRef,
+  forwardRef,
+  Suspense,
+  useRef,
+  useTransition,
+} from "react";
+import { Color, Group, PerspectiveCamera } from "three";
 
-const cameraPosition = new Vector3(0, 0, 1);
-const model = {
-  position: new Vector3(5, -1.5, -10),
-  rotation: new Euler(0, -Math.PI / 6, 0),
-};
+// THREE.ColorManagement.legacyMode = false;
 
-function SummaryPageModel() {
-  const [isDebugMode, setDebugMode] = useState(false);
-  const { name, aNumber } = useControls({ name: "World", aNumber: 0 });
+export function SummaryPageModel() {
+  const { cameraPosition, modelPosition, modelRotation } = useControls(
+    "modelSettings",
+    {
+      cameraPosition: [0, 0, 1],
+      modelPosition: [4, -1.5, -10],
+      modelRotation: [0, -Math.PI / 6, 0],
+    }
+  );
 
+  const ambientLight = useControls("AmbientLight", {
+    intensity: 1,
+  });
+  const areaLight = useControls("Area Light", {
+    color: "#d1d1d1",
+    width: 20,
+    height: 50,
+    position: [0, 0, 1],
+    intensity: 1,
+  });
+
+  const isDebugMode = useDebugger();
   const modelRef = useRef<Group>(null);
   const cameraRef = useRef<PerspectiveCamera>(null);
-  const router = useRouter();
-
-  useLayoutEffect(() => {
-    if (window.location.hash.search("debug") != -1) {
-      console.log("🛠️ %cdebug mode is %cON", "color:white", "color:red");
-      setDebugMode(true);
-    } else {
-      console.log("🛠️ %cdebug mode is %cOFF", "color:white", "color:green");
-      setDebugMode(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    const onHashChanged = (e: HashChangeEvent) => {
-      if (e.newURL.search("debug") != -1) {
-        console.log("🛠️ %cdebug mode is %cON", "color:white", "color:red");
-        setDebugMode(true);
-      } else {
-        console.log("🛠️ %cdebug mode is %cOFF", "color:white", "color:green");
-        setDebugMode(false);
-      }
-    };
-    window.addEventListener("hashchange", onHashChanged);
-    return () => {
-      window.removeEventListener("hashchange", onHashChanged);
-    };
-  }, [router.events]);
 
   return (
-    <Grid item xs={4} className={S.profilePicWrapper}>
-      <Leva hidden={!isDebugMode} />
-      <Canvas
-        style={{
-          height: "100%",
-          position: "absolute",
-          width: "100%",
-          left: 0,
-          top: 0,
-          zIndex: "-1",
-        }}
-      >
-        <rectAreaLight
-          width={20}
-          height={50}
-          position={cameraPosition}
-          intensity={2}
+    <>
+      <SoftShadows />
+      <rectAreaLight
+        width={areaLight.width}
+        height={areaLight.height}
+        position={areaLight.position}
+        intensity={areaLight.intensity}
+        color={new Color(areaLight.color)}
+      />
+      <ambientLight intensity={ambientLight.intensity} />
+      <Suspense fallback={<Loader />}>
+        <Model
+          position={modelPosition}
+          ref={modelRef}
+          rotation={modelRotation}
         />
-        <Suspense fallback={<Loader />}>
-          <Model
-            position={model.position}
-            ref={modelRef}
-            rotation={model.rotation}
-          />
-          <DreiPerspectiveCamera
-            makeDefault
-            position={cameraPosition}
-            ref={cameraRef}
-          />
-          <OrbitControls />
-        </Suspense>
-      </Canvas>
-    </Grid>
+        <DreiPerspectiveCamera
+          makeDefault
+          position={cameraPosition}
+          ref={cameraRef}
+        />
+        {isDebugMode && (
+          <>
+            <axesHelper args={[5]} />
+            <OrbitControls />
+          </>
+        )}
+      </Suspense>
+    </>
   );
 }
 
-export function Model(props: GroupProps) {
+const Model = forwardRef((props: GroupProps, ref: ForwardedRef<Group>) => {
+  const [, startTransition] = useTransition();
   const { nodes, materials } = useGLTF("/assets/3dmodels/portfolio.glb") as any;
 
+  // const { bgColor } = useControls({
+  //   bgColor: "#fff",
+  // });
+
+  // materials.bgGRADIENT = new MeshBasicMaterial({ color: bgColor });
+
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} ref={ref}>
       <mesh
         castShadow
         receiveShadow
@@ -403,8 +398,6 @@ export function Model(props: GroupProps) {
       />
     </group>
   );
-}
+});
 
 useGLTF.preload("/assets/3dmodels/portfolio.glb");
-
-export default SummaryPageModel;

@@ -2,21 +2,25 @@ import { useTheme } from "@mui/material";
 import { Html, useProgress } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
-import { useRef } from "react";
-import { Mesh, Vector3 } from "three";
+import { useRef, useTransition } from "react";
+import { Euler, Mesh, Vector3 } from "three";
 
 const loaderPosition = new Vector3(4, 0.5, 0);
 
 export function Loader() {
   const theme = useTheme();
+  const [, startTransition] = useTransition();
   const loaderMeshRef = useRef<Mesh>(null);
   const { progress } = useProgress();
 
   useFrame(({ clock }) => {
-    if (loaderMeshRef.current?.rotation) {
-      loaderMeshRef.current.rotation.x = clock.getElapsedTime();
-      loaderMeshRef.current.rotation.y = clock.getElapsedTime();
-    }
+    startTransition(() => {
+      if (loaderMeshRef.current?.rotation) {
+        const elapsedTime = clock.getElapsedTime();
+        loaderMeshRef.current.rotation.x = elapsedTime;
+        loaderMeshRef.current.rotation.y = elapsedTime;
+      }
+    });
   });
 
   return (

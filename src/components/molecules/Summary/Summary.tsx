@@ -1,8 +1,8 @@
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import Canvas3D from "./Canvas3D";
 import S from "./Summary.module.css";
-import SummaryPageModel from "./SummaryPageModel";
 
 export default function Summary() {
   return (
@@ -56,7 +56,7 @@ export default function Summary() {
               </Grid>
             </Stack>
           </Grid>
-          <SummaryPageModel />
+          <Canvas3D />
         </Grid>
       </Container>
     </Box>
