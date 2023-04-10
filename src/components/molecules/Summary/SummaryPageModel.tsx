@@ -16,8 +16,9 @@ import {
   useTransition,
 } from "react";
 import { Color, Group, PerspectiveCamera } from "three";
+import * as THREE from "three";
 
-// THREE.ColorManagement.legacyMode = false;
+THREE.ColorManagement.legacyMode = false;
 
 export function SummaryPageModel() {
   const { cameraPosition, modelPosition, modelRotation } = useControls(
@@ -28,16 +29,15 @@ export function SummaryPageModel() {
       modelRotation: [0, -Math.PI / 6, 0],
     }
   );
-
   const ambientLight = useControls("AmbientLight", {
-    intensity: 1,
+    intensity: 0.1,
   });
   const areaLight = useControls("Area Light", {
     color: "#d1d1d1",
     width: 20,
     height: 50,
     position: [0, 0, 1],
-    intensity: 1,
+    intensity: 2,
   });
 
   const isDebugMode = useDebugger();
@@ -55,6 +55,7 @@ export function SummaryPageModel() {
         color={new Color(areaLight.color)}
       />
       <ambientLight intensity={ambientLight.intensity} />
+      <Loader />
       <Suspense fallback={<Loader />}>
         <Model
           position={modelPosition}

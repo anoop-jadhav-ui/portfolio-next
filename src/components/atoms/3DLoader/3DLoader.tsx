@@ -1,37 +1,23 @@
-import { useTheme } from "@mui/material";
 import { Html, useProgress } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useControls } from "leva";
 
-import { useRef, useTransition } from "react";
-import { Euler, Mesh, Vector3 } from "three";
-
-const loaderPosition = new Vector3(4, 0.5, 0);
+import { useRef } from "react";
+import { Mesh } from "three";
 
 export function Loader() {
-  const theme = useTheme();
-  const [, startTransition] = useTransition();
   const loaderMeshRef = useRef<Mesh>(null);
   const { progress } = useProgress();
 
-  useFrame(({ clock }) => {
-    startTransition(() => {
-      if (loaderMeshRef.current?.rotation) {
-        const elapsedTime = clock.getElapsedTime();
-        loaderMeshRef.current.rotation.x = elapsedTime;
-        loaderMeshRef.current.rotation.y = elapsedTime;
-      }
-    });
+  const { position, color, rotation } = useControls("loader", {
+    position: [4, 0.5, 0],
+    color: "#ffa6a6",
+    rotation: [0.9, 1.64, 0],
   });
 
   return (
-    <mesh
-      visible
-      position={loaderPosition}
-      ref={loaderMeshRef}
-      rotation={[0, Math.PI / 2, 0]}
-    >
+    <mesh visible position={position} ref={loaderMeshRef} rotation={rotation}>
       <boxGeometry args={[0.5, 0.5, 0.5]} />
-      <meshStandardMaterial color={theme.palette.grey[300]} transparent />
+      <meshStandardMaterial color={color} transparent />
       <Html
         as="div"
         style={{
@@ -41,7 +27,7 @@ export function Loader() {
         <p
           style={{
             fontSize: 16,
-            color: theme.palette.grey[300],
+            color,
             fontWeight: "bold",
             position: "absolute",
             left: "-0.75rem",
