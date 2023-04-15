@@ -1,33 +1,32 @@
 import { useDebugger } from "@/hooks/useDebugger";
 import { useWindowObject } from "@/hooks/useWindowObject";
-import { Grid } from "@mui/material";
 import { Canvas } from "@react-three/fiber";
 import { Leva } from "leva";
-import { SummaryPageModel } from "./SummaryPageModel";
+import { CSSProperties, ReactNode } from "react";
 
-function Canvas3D() {
+function Canvas3D({
+  children,
+  style,
+  frameloop = "demand",
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+  frameloop?: "always" | "never" | "demand";
+}) {
   const isDebugMode = useDebugger();
   const windowObj = useWindowObject();
 
   return (
-    <Grid item xs={4}>
+    <>
       <Leva hidden={!isDebugMode} flat />
       <Canvas
-        style={{
-          height: "100%",
-          position: "absolute",
-          width: "100%",
-          left: 0,
-          top: 0,
-          zIndex: isDebugMode ? "1" : "-1",
-          border: "1px solid yellowgreen",
-        }}
-        frameloop="demand"
+        style={{ ...style, zIndex: isDebugMode ? "1" : "-1" }}
+        frameloop={frameloop}
         dpr={windowObj?.devicePixelRatio}
       >
-        <SummaryPageModel />
+        {children}
       </Canvas>
-    </Grid>
+    </>
   );
 }
 

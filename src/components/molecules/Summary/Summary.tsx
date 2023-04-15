@@ -3,6 +3,7 @@ import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Canvas3D from "./Canvas3D";
 import S from "./Summary.module.css";
+import { SummaryPageModel } from "./SummaryPageModel";
 
 export default function Summary() {
   return (
@@ -56,7 +57,22 @@ export default function Summary() {
               </Grid>
             </Stack>
           </Grid>
-          <Canvas3D />
+          <Grid item xs={4}>
+            <Canvas3D
+              style={{
+                height: "100%",
+                position: "absolute",
+                width: "100%",
+                left: 0,
+                top: 0,
+                border: "1px solid yellowgreen",
+                pointerEvents: "auto",
+              }}
+              frameloop="demand"
+            >
+              <SummaryPageModel />
+            </Canvas3D>
+          </Grid>
         </Grid>
       </Container>
     </Box>
