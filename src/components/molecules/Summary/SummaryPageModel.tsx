@@ -20,10 +20,10 @@ export function SummaryPageModel() {
 
   const areaLight = useControls("Area Light", {
     color: "#d1d1d1",
-    width: 20,
-    height: 50,
-    position: [0, 0, 10],
-    intensity: 2,
+    width: 500,
+    height: 500,
+    position: [0, 0, 5],
+    intensity: 1,
   });
 
   const isDebugMode = useDebugger();

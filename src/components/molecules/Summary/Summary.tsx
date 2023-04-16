@@ -11,11 +11,11 @@ export default function Summary() {
       <Container component="article" maxWidth="lg">
         <Grid container alignItems="center">
           <Grid item xs={8} className={S.SummaryContent}>
-            <Stack sx={{ pl: 2 }}>
+            <Stack sx={{ pl: 0 }}>
               <Typography
                 variant="h3"
                 color="text.primary"
-                fontSize={60}
+                fontSize={80}
                 lineHeight={1}
               >
                 Crafting Intuitive Interfaces for the Digital World
@@ -23,7 +23,7 @@ export default function Summary() {
               <Typography
                 variant="body1"
                 color="text.secondary"
-                fontSize={18}
+                fontSize={24}
                 lineHeight={1.3}
                 pt={1}
               >

@@ -13,10 +13,11 @@ export const color = {
   ORANGE: "#ff8154",
   BLUE: "#0052ce",
   DARK_BLUE: "#0052ce",
-  TEXTBLOCK_BLUE: "#305af2",
+  TEXTBLOCK_BLUE: "#5e77d1",
 
   TEXTBLOCK_RED: "#c70000",
 
   NOTEBOOK_YELLOW: "#ffbe4d",
-  NOTEBOOK_RUBBER: "#4eafff",
+  NOTEBOOK_RUBBER: "#6cc7bd",
+  NOTEBOOK_COVER: "#5c6daa",
 };

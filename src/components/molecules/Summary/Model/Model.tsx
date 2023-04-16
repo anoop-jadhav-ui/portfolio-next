@@ -38,18 +38,21 @@ const Monitor = ({ nodes, materials }: SubModelProps) => {
     roughness: 1,
     emissive: screen,
     emissiveIntensity: 2,
+    clearcoat: 1,
   });
   const light1Material = new MeshPhysicalMaterial({
     color: light1,
     roughness: 1,
     emissive: light1,
     emissiveIntensity: 2,
+    clearcoat: 1,
   });
   const light2Material = new MeshPhysicalMaterial({
     color: light2,
     roughness: 1,
     emissive: light2,
     emissiveIntensity: 2,
+    clearcoat: 1,
   });
 
   return (
@@ -126,11 +129,13 @@ const Dropper = ({ nodes, materials }: SubModelProps) => {
     roughness: 0,
     transmission: 1,
     ior: 1.5,
+    clearcoat: 1,
   });
 
   const dropperLiquidMaterial = new MeshPhysicalMaterial({
     color: dropperLiquidColor,
     roughness: 1,
+    clearcoat: 1,
   });
   const dropperHolderMaterial = new MeshPhysicalMaterial({
     color: dropperHolderColor,
@@ -253,6 +258,7 @@ const Bulb = ({ nodes, materials }: SubModelProps) => {
     roughness: 1,
     emissive: bulbColor,
     emissiveIntensity: 1,
+    clearcoat: 1,
   });
 
   const holderMaterial = new MeshPhysicalMaterial({
@@ -286,9 +292,11 @@ const TrackPad = ({ nodes, materials }: SubModelProps) => {
 
   const whiteMaterial = new MeshPhysicalMaterial({
     color: white,
+    roughness: 1,
   });
   const greyMaterial = new MeshPhysicalMaterial({
     color: grey,
+    clearcoat: 1,
   });
 
   return (
@@ -308,7 +316,7 @@ const TrackPad = ({ nodes, materials }: SubModelProps) => {
   );
 };
 const TextBlock = ({ nodes, materials }: SubModelProps) => {
-  const { red, blue } = useControls("Trackpad", {
+  const { red, blue } = useControls("TextBlock", {
     red: color.TEXTBLOCK_RED,
     blue: color.TEXTBLOCK_BLUE,
   });
@@ -377,7 +385,7 @@ const NoteBook = ({ nodes, materials }: SubModelProps) => {
       bookmark2: color.NOTEBOOK_YELLOW,
       rubber: color.NOTEBOOK_RUBBER,
       pages: color.WHITE,
-      cover: color.DARK_BLUE,
+      cover: color.NOTEBOOK_COVER,
     }
   );
   const bookmark1Material = new MeshPhysicalMaterial({
@@ -453,16 +461,16 @@ const ColorCards = ({ nodes, materials }: SubModelProps) => {
   );
 };
 const Background = ({ nodes, materials }: SubModelProps) => {
-  const { color } = useControls("background", {
-    color: "#d739ff",
+  const { bgColor } = useControls("background", {
+    bgColor: color.WHITE,
   });
 
   const bgMaterial = new MeshPhysicalMaterial({
-    color: color,
+    color: bgColor,
     transmission: 1,
     ior: 1.5,
     clearcoat: 1,
-    roughness: 0.8,
+    roughness: 0.9,
   });
 
   return (
