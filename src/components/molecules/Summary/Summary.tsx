@@ -65,7 +65,6 @@ export default function Summary() {
                 width: "100%",
                 left: 0,
                 top: 0,
-                border: "1px solid yellowgreen",
                 pointerEvents: "auto",
               }}
               frameloop="demand"

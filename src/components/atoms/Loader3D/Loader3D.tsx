@@ -1,3 +1,4 @@
+import { color } from "@/components/molecules/Summary/Model/materials";
 import { animated, useSpring } from "@react-spring/three";
 import { Html, useProgress } from "@react-three/drei";
 import { useControls } from "leva";
@@ -5,51 +6,15 @@ import { useControls } from "leva";
 function Loader3D() {
   const { progress } = useProgress();
 
-  const { position, color } = useControls("loader", {
+  const { position, textColor } = useControls("loader", {
     position: [0, 0, 0],
-    color: "#f85a5a",
-    ambientLightIntensity: 1,
+    textColor: color.BLACK,
   });
 
-  const [springs, api] = useSpring(
-    () => ({
-      scale: 1,
-      config: (key) => {
-        switch (key) {
-          case "scale":
-            return {
-              mass: 4,
-              friction: 10,
-            };
-          default:
-            return {};
-        }
-      },
-    }),
-    []
-  );
-
-  const handlePointerEnter = () => {
-    api.start({
-      scale: 2,
-    });
-  };
-
-  const handlePointerLeave = () => {
-    api.start({
-      scale: 1,
-    });
-  };
-
   return (
-    <animated.mesh
-      position={position}
-      onPointerEnter={handlePointerEnter}
-      onPointerLeave={handlePointerLeave}
-      scale={springs.scale}
-    >
+    <animated.mesh position={position} scale={2}>
       <sphereGeometry args={[0.25, 32]} />
-      <meshStandardMaterial color={color} />
+      <meshNormalMaterial />
       <Html
         as="div"
         role="progressbar"
@@ -59,12 +24,12 @@ function Loader3D() {
       >
         <p
           style={{
-            fontSize: 16,
-            color,
+            fontSize: 24,
+            color: textColor,
             fontWeight: "bold",
             position: "absolute",
-            left: "-0.75rem",
-            top: "50px",
+            left: "-1.25rem",
+            top: "3rem",
           }}
         >
           {progress.toFixed()}%

@@ -1,17 +1,10 @@
 import { animated, useSpring } from "@react-spring/three";
 import { useGLTF, useProgress } from "@react-three/drei";
-import { GroupProps, useThree } from "@react-three/fiber";
+import { GroupProps } from "@react-three/fiber";
 import { useControls } from "leva";
-import {
-  ReactNode,
-  startTransition,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
-import { Material, Vector2, Vector3 } from "three";
+import { useEffect, useTransition } from "react";
+import { Material, MeshPhysicalMaterial } from "three";
+import { color } from "./materials";
 
 interface SubModelProps {
   materials: {
@@ -24,6 +17,41 @@ interface SubModelProps {
   };
 }
 const Monitor = ({ nodes, materials }: SubModelProps) => {
+  const { dark, screen, grey, light1, light2 } = useControls("Monitor", {
+    dark: color.BLACK,
+    screen: color.BLUE,
+    grey: color.LIGHT_GREY,
+    light1: color.RED,
+    light2: color.PURPLE,
+  });
+
+  const darkMaterial = new MeshPhysicalMaterial({
+    color: dark,
+    roughness: 1,
+  });
+  const greyMaterial = new MeshPhysicalMaterial({
+    color: grey,
+    roughness: 1,
+  });
+  const screenMaterial = new MeshPhysicalMaterial({
+    color: screen,
+    roughness: 1,
+    emissive: screen,
+    emissiveIntensity: 2,
+  });
+  const light1Material = new MeshPhysicalMaterial({
+    color: light1,
+    roughness: 1,
+    emissive: light1,
+    emissiveIntensity: 2,
+  });
+  const light2Material = new MeshPhysicalMaterial({
+    color: light2,
+    roughness: 1,
+    emissive: light2,
+    emissiveIntensity: 2,
+  });
+
   return (
     <>
       <group>
@@ -45,86 +73,114 @@ const Monitor = ({ nodes, materials }: SubModelProps) => {
           castShadow
           receiveShadow
           geometry={nodes.monitor_1.geometry}
-          material={materials.GREY_METAL}
+          material={greyMaterial}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.monitor_2.geometry}
-          material={materials.LIGHT_BLUE_EMISSIVE}
+          material={screenMaterial}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.monitor_3.geometry}
-          material={materials.BLACK}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.monitor_4.geometry}
-          material={materials.MONITOR_TEXTURE}
+          material={darkMaterial}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.monitor_5.geometry}
-          material={materials.RED}
+          material={light1Material}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.monitor_4.geometry}
+          material={light2Material}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.macStandBase.geometry}
-          material={materials.GREY_METAL}
+          material={greyMaterial}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.macStandHinge.geometry}
-          material={materials.GREY_METAL}
+          material={greyMaterial}
         />
       </group>
     </>
   );
 };
 const Dropper = ({ nodes, materials }: SubModelProps) => {
+  const { dropperLiquidColor, dropperHolderColor } = useControls("Dropper", {
+    dropperLiquidColor: color.RED,
+    dropperHolderColor: color.ORANGE,
+  });
+
+  const glassMaterial = new MeshPhysicalMaterial({
+    color: color.WHITE,
+    roughness: 0,
+    transmission: 1,
+    ior: 1.5,
+  });
+
+  const dropperLiquidMaterial = new MeshPhysicalMaterial({
+    color: dropperLiquidColor,
+    roughness: 1,
+  });
+  const dropperHolderMaterial = new MeshPhysicalMaterial({
+    color: dropperHolderColor,
+    roughness: 1,
+  });
   return (
     <>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.dropper_1.geometry}
-        material={materials.GLASS}
+        material={glassMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.dropper_2.geometry}
-        material={materials.ORANGE}
+        material={dropperHolderMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.dropperFluid.geometry}
-        material={materials.RED}
+        material={dropperLiquidMaterial}
       />
     </>
   );
 };
 const Pen = ({ nodes, materials }: SubModelProps) => {
+  const { accentColor, penColor } = useControls("Pen", {
+    accentColor: color.RED,
+    penColor: color.BLACK,
+  });
+
+  const accentMaterial = new MeshPhysicalMaterial({ color: accentColor });
+  const penMaterial = new MeshPhysicalMaterial({ color: penColor });
+
   return (
     <animated.group>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.pen_1.geometry}
-        material={materials.BLACK}
+        material={penMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.pen_2.geometry}
-        material={materials.RED}
+        material={accentMaterial}
       />
       <mesh
         castShadow
@@ -136,96 +192,147 @@ const Pen = ({ nodes, materials }: SubModelProps) => {
   );
 };
 const Cubes = ({ nodes, materials }: SubModelProps) => {
+  const { cubeColor } = useControls("Cubes", {
+    cubeColor: color.PURPLE,
+  });
+
+  const material = new MeshPhysicalMaterial({
+    color: cubeColor,
+    roughness: 1,
+  });
+
   return (
     <>
-      <mesh
+      <animated.mesh
         castShadow
         receiveShadow
         geometry={nodes.randomCube0.geometry}
-        material={materials.LIGHT_PURPLE}
+        material={material}
       />
-      <mesh
+      <animated.mesh
         castShadow
         receiveShadow
         geometry={nodes.randomCube1.geometry}
-        material={materials.LIGHT_PURPLE}
+        material={material}
       />
-      <mesh
+      <animated.mesh
         castShadow
         receiveShadow
         geometry={nodes.randomCube2.geometry}
-        material={materials.LIGHT_PURPLE}
+        material={material}
       />
-      <mesh
+      <animated.mesh
         castShadow
         receiveShadow
         geometry={nodes.randomCube3.geometry}
-        material={materials.LIGHT_PURPLE}
+        material={material}
       />
-      <mesh
+      <animated.mesh
         castShadow
         receiveShadow
         geometry={nodes.randomCube4.geometry}
-        material={materials.LIGHT_PURPLE}
+        material={material}
       />
-      <mesh
+      <animated.mesh
         castShadow
         receiveShadow
         geometry={nodes.randomCube5.geometry}
-        material={materials.LIGHT_PURPLE}
+        material={material}
       />
     </>
   );
 };
 const Bulb = ({ nodes, materials }: SubModelProps) => {
+  const { bulbColor, holderColor } = useControls("Bulb", {
+    bulbColor: "#ff8e4d",
+    holderColor: "#5f5f5f",
+  });
+
+  const yellowEmissiveMaterial = new MeshPhysicalMaterial({
+    color: bulbColor,
+    roughness: 1,
+    emissive: bulbColor,
+    emissiveIntensity: 1,
+  });
+
+  const holderMaterial = new MeshPhysicalMaterial({
+    color: holderColor,
+    roughness: 1,
+    emissive: 1,
+  });
+
   return (
     <>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.bulb_1.geometry}
-        material={materials.YELLOW}
+        material={yellowEmissiveMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.bulb_2.geometry}
-        material={materials.DARK_BLUE}
+        material={holderMaterial}
       />
     </>
   );
 };
 const TrackPad = ({ nodes, materials }: SubModelProps) => {
+  const { white, grey } = useControls("Trackpad", {
+    white: color.WHITE,
+    grey: color.LIGHT_GREY,
+  });
+
+  const whiteMaterial = new MeshPhysicalMaterial({
+    color: white,
+  });
+  const greyMaterial = new MeshPhysicalMaterial({
+    color: grey,
+  });
+
   return (
     <mesh
       castShadow
       receiveShadow
       geometry={nodes.trackpad.geometry}
-      material={materials.WHITE}
+      material={whiteMaterial}
     >
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.trackpadBottom.geometry}
-        material={materials.GREY_METAL}
+        material={greyMaterial}
       />
     </mesh>
   );
 };
 const TextBlock = ({ nodes, materials }: SubModelProps) => {
+  const { red, blue } = useControls("Trackpad", {
+    red: color.TEXTBLOCK_RED,
+    blue: color.TEXTBLOCK_BLUE,
+  });
+
+  const redMaterial = new MeshPhysicalMaterial({
+    color: red,
+  });
+  const blueMaterial = new MeshPhysicalMaterial({
+    color: blue,
+  });
+
   return (
     <>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.textBlocks_1.geometry}
-        material={materials.RED}
+        material={redMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.textBlocks_2.geometry}
-        material={materials.BLUE}
+        material={blueMaterial}
       />
       <mesh
         castShadow
@@ -237,6 +344,14 @@ const TextBlock = ({ nodes, materials }: SubModelProps) => {
   );
 };
 const LatteCup = ({ nodes, materials }: SubModelProps) => {
+  const { lid } = useControls("LatteCup", {
+    lid: color.RED,
+  });
+
+  const lidMaterial = new MeshPhysicalMaterial({
+    color: lid,
+  });
+
   return (
     <>
       <mesh
@@ -249,42 +364,67 @@ const LatteCup = ({ nodes, materials }: SubModelProps) => {
         castShadow
         receiveShadow
         geometry={nodes.latteMug_2.geometry}
-        material={materials.RED}
+        material={lidMaterial}
       />
     </>
   );
 };
 const NoteBook = ({ nodes, materials }: SubModelProps) => {
+  const { rubber, cover, bookmark1, pages, bookmark2 } = useControls(
+    "Notebook",
+    {
+      bookmark1: color.RED,
+      bookmark2: color.NOTEBOOK_YELLOW,
+      rubber: color.NOTEBOOK_RUBBER,
+      pages: color.WHITE,
+      cover: color.DARK_BLUE,
+    }
+  );
+  const bookmark1Material = new MeshPhysicalMaterial({
+    color: bookmark1,
+  });
+  const rubberMaterial = new MeshPhysicalMaterial({
+    color: rubber,
+  });
+  const coverMaterial = new MeshPhysicalMaterial({
+    color: cover,
+  });
+  const pagesMaterial = new MeshPhysicalMaterial({
+    color: pages,
+  });
+  const bookmark2Material = new MeshPhysicalMaterial({
+    color: bookmark2,
+  });
   return (
     <mesh
       castShadow
       receiveShadow
       geometry={nodes.notebook.geometry}
-      material={materials.DARK_BLUE}
+      material={coverMaterial}
     >
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.notebookPages_1.geometry}
-        material={materials.CUP_TEXTURE}
+        material={pagesMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.notebookPages_2.geometry}
-        material={materials.RED}
+        material={bookmark1Material}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.notebookPages_3.geometry}
-        material={materials.YELLOW}
+        material={bookmark2Material}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.notebookRubber.geometry}
-        material={materials.LIGHT_BLUE}
+        material={rubberMaterial}
       />
     </mesh>
   );
@@ -313,39 +453,52 @@ const ColorCards = ({ nodes, materials }: SubModelProps) => {
   );
 };
 const Background = ({ nodes, materials }: SubModelProps) => {
+  const { color } = useControls("background", {
+    color: "#d739ff",
+  });
+
+  const bgMaterial = new MeshPhysicalMaterial({
+    color: color,
+    transmission: 1,
+    ior: 1.5,
+    clearcoat: 1,
+    roughness: 0.8,
+  });
+
   return (
     <mesh
       castShadow
       receiveShadow
       geometry={nodes.background.geometry}
-      material={materials.bgGRADIENT}
+      material={bgMaterial}
+      position={[0, -0.06, 0]}
     >
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.background4.geometry}
-        material={materials.bgGRADIENT}
+        material={bgMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.background2.geometry}
-        material={materials.bgGRADIENT}
+        material={bgMaterial}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.background3.geometry}
-        material={materials.bgGRADIENT}
+        material={bgMaterial}
       />
     </mesh>
   );
 };
 
 export const Model = (props: GroupProps) => {
-  const isOver = useRef(false);
-
-  const { width, height } = useThree((state) => state.size);
+  const { nodes, materials } = useGLTF(
+    "/assets/3dmodels/portfolio.glb"
+  ) as unknown as SubModelProps;
 
   const { modelPosition, modelRotation } = useControls("modelSettings", {
     modelPosition: [2, -0.74, 0],
@@ -354,31 +507,12 @@ export const Model = (props: GroupProps) => {
 
   const [, startTransition] = useTransition();
 
-  const { nodes, materials } = useGLTF(
-    "/assets/3dmodels/portfolio.glb"
-  ) as unknown as SubModelProps;
-
-  const [vector3] = useState(() => new Vector3());
-
   const { progress } = useProgress();
   const [springs, api] = useSpring(() => ({
     scale: 0,
-    rotation: modelRotation,
-    onChange: ({ value }) => {
-      vector3.set(value.rotation[0], value.rotation[1], value.rotation[2]);
-    },
-    config: (key) => {
-      switch (key) {
-        case "scale":
-          return {
-            mass: 4,
-            friction: 35,
-          };
-        case "rotation":
-          return { mass: 4, friction: 220 };
-        default:
-          return {};
-      }
+    config: {
+      mass: 4,
+      friction: 35,
     },
   }));
 
@@ -392,56 +526,13 @@ export const Model = (props: GroupProps) => {
     });
   });
 
-  const handleWindowPointerOver = useCallback(() => {
-    isOver.current = true;
-  }, []);
-
-  const handleWindowPointerOut = useCallback(() => {
-    isOver.current = false;
-    api.start({
-      rotation: modelRotation,
-    });
-  }, []);
-
-  const handlePointerMove = useCallback(
-    (e) => {
-      if (isOver.current) {
-        const y = (e.offsetX / width) * -1 + 1;
-
-        api.start({
-          rotation: [modelRotation[0], y * 2, modelRotation[2]],
-        });
-      }
-    },
-    [height, api, modelRotation]
-  );
-
-  useEffect(() => {
-    window.addEventListener("pointerover", handleWindowPointerOver);
-    window.addEventListener("pointerout", handleWindowPointerOut);
-    window.addEventListener("pointermove", handlePointerMove);
-
-    return () => {
-      window.removeEventListener("pointerover", handleWindowPointerOver);
-      window.removeEventListener("pointerout", handleWindowPointerOut);
-      window.removeEventListener("pointermove", handlePointerMove);
-    };
-  }, [handleWindowPointerOver, handleWindowPointerOut, handlePointerMove]);
-
   return (
     <animated.group
       {...props}
       dispose={null}
       scale={springs.scale}
       position={modelPosition}
-      rotation={springs.rotation.to((x, y, z) => [
-        modelRotation[0],
-        y,
-        modelRotation[2],
-      ])}
-      onPointerOver={() => {
-        console.log("pointer over");
-      }}
+      rotation={modelRotation}
     >
       <TrackPad nodes={nodes} materials={materials} />
       <TextBlock nodes={nodes} materials={materials} />
