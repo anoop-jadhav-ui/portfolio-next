@@ -1,19 +1,17 @@
 import Loader3D from "@/components/atoms/Loader3D/Loader3D";
 import { useDebugger } from "@/hooks/useDebugger";
 import {
+  Center,
   OrbitControls,
-  PerspectiveCamera as DreiPerspectiveCamera,
+  PresentationControls,
+  Stats,
 } from "@react-three/drei";
 import { useControls } from "leva";
-import { Suspense, useRef } from "react";
-import { Color, PerspectiveCamera } from "three";
+import { Suspense } from "react";
+import { Color } from "three";
 import { Model } from "./Model/Model";
 
 export function SummaryPageModel() {
-  const { cameraPosition } = useControls("cameraControls", {
-    cameraPosition: [0, 0, 10],
-  });
-
   const ambientLight = useControls("AmbientLight", {
     intensity: 0.1,
   });
@@ -27,10 +25,16 @@ export function SummaryPageModel() {
   });
 
   const isDebugMode = useDebugger();
-  const cameraRef = useRef<PerspectiveCamera>(null);
 
   return (
-    <>
+    <PresentationControls
+      snap
+      global
+      zoom={0.8}
+      rotation={[0, -Math.PI / 6, 0]}
+      polar={[0, Math.PI / 6]}
+      azimuth={[-Math.PI / 6, Math.PI / 6]}
+    >
       <rectAreaLight
         width={areaLight.width}
         height={areaLight.height}
@@ -39,13 +43,11 @@ export function SummaryPageModel() {
         color={new Color(areaLight.color)}
       />
       <ambientLight intensity={ambientLight.intensity} />
+
       <Suspense fallback={<Loader3D />}>
-        <Model />
-        <DreiPerspectiveCamera
-          makeDefault
-          position={cameraPosition}
-          ref={cameraRef}
-        />
+        <Center position={[2, -1.5, -1]}>
+          <Model />
+        </Center>
         {isDebugMode && (
           <>
             <axesHelper args={[5]} />
@@ -53,6 +55,6 @@ export function SummaryPageModel() {
           </>
         )}
       </Suspense>
-    </>
+    </PresentationControls>
   );
 }

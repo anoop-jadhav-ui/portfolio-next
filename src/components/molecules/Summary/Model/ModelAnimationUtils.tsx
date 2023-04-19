@@ -1,5 +1,7 @@
+import { ManTwoTone } from "@mui/icons-material";
 import { useSpring, animated } from "@react-spring/three";
-import { ReactNode, useTransition } from "react";
+import { Float } from "@react-three/drei";
+import { ReactNode, useMemo, useTransition } from "react";
 
 export const ScaleOnHover = ({ children }: { children: ReactNode }) => {
   const [, startTransition] = useTransition();
@@ -38,5 +40,23 @@ export const ScaleOnHover = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </animated.group>
+  );
+};
+
+export const CubeFloat = ({ children }: { children: ReactNode }) => {
+  const speed = useMemo(() => {
+    return Math.random() + 0.25;
+  }, []);
+  return (
+    <Float
+      position={[0, 0.5, 0]}
+      floatingRange={[0, 1]}
+      rotation={[Math.PI / 3.5, 0, 0]}
+      rotationIntensity={2}
+      floatIntensity={1}
+      speed={speed}
+    >
+      {children}
+    </Float>
   );
 };

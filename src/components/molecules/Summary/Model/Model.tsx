@@ -1,10 +1,11 @@
 import { animated, useSpring } from "@react-spring/three";
-import { useGLTF, useProgress } from "@react-three/drei";
+import { Float, useGLTF, useProgress } from "@react-three/drei";
 import { GroupProps } from "@react-three/fiber";
 import { useControls } from "leva";
-import { useEffect, useTransition } from "react";
+import { useEffect, useMemo, useTransition } from "react";
 import { Material, MeshPhysicalMaterial } from "three";
 import { color } from "./materials";
+import { CubeFloat } from "./ModelAnimationUtils";
 
 interface SubModelProps {
   materials: {
@@ -31,7 +32,7 @@ const Monitor = ({ nodes, materials }: SubModelProps) => {
   });
   const greyMaterial = new MeshPhysicalMaterial({
     color: grey,
-    roughness: 1,
+    flatShading: true,
   });
   const screenMaterial = new MeshPhysicalMaterial({
     color: screen,
@@ -120,7 +121,7 @@ const Monitor = ({ nodes, materials }: SubModelProps) => {
 };
 const Dropper = ({ nodes, materials }: SubModelProps) => {
   const { dropperLiquidColor, dropperHolderColor } = useControls("Dropper", {
-    dropperLiquidColor: color.RED,
+    dropperLiquidColor: color.DROPPER_RED,
     dropperHolderColor: color.ORANGE,
   });
 
@@ -141,8 +142,20 @@ const Dropper = ({ nodes, materials }: SubModelProps) => {
     color: dropperHolderColor,
     roughness: 1,
   });
+
+  const floatSpeed = useMemo(() => {
+    return Math.random() + 1;
+  }, []);
+
   return (
-    <>
+    <Float
+      position={[0, 0, 0]}
+      floatingRange={[0, 0.25]}
+      rotation={[Math.PI / 8, 0, 0]}
+      rotationIntensity={1}
+      floatIntensity={1}
+      speed={floatSpeed}
+    >
       <mesh
         castShadow
         receiveShadow
@@ -161,89 +174,100 @@ const Dropper = ({ nodes, materials }: SubModelProps) => {
         geometry={nodes.dropperFluid.geometry}
         material={dropperLiquidMaterial}
       />
-    </>
+    </Float>
   );
 };
 const Pen = ({ nodes, materials }: SubModelProps) => {
   const { accentColor, penColor } = useControls("Pen", {
-    accentColor: color.RED,
+    accentColor: color.PEN_RED,
     penColor: color.BLACK,
   });
 
   const accentMaterial = new MeshPhysicalMaterial({ color: accentColor });
   const penMaterial = new MeshPhysicalMaterial({ color: penColor });
 
+  const floatSpeed = useMemo(() => {
+    return Math.random() + 1;
+  }, []);
+
   return (
-    <animated.group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.pen_1.geometry}
-        material={penMaterial}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.pen_2.geometry}
-        material={accentMaterial}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.pen_3.geometry}
-        material={materials.WHITE}
-      />
-    </animated.group>
+    <Float
+      position={[0, 0, 0]}
+      floatingRange={[0, 0.25]}
+      rotation={[Math.PI / 8, 0, 0]}
+      rotationIntensity={1}
+      floatIntensity={1}
+      speed={floatSpeed}
+    >
+      <group>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.pen_1.geometry}
+          material={penMaterial}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.pen_2.geometry}
+          material={accentMaterial}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.pen_3.geometry}
+          material={materials.WHITE}
+        />
+      </group>
+    </Float>
   );
 };
+
 const Cubes = ({ nodes, materials }: SubModelProps) => {
   const { cubeColor } = useControls("Cubes", {
-    cubeColor: color.PURPLE,
+    cubeColor: color.CUBE_COLOR,
   });
 
   const material = new MeshPhysicalMaterial({
     color: cubeColor,
-    roughness: 1,
+    roughness: 0.1,
   });
 
   return (
     <>
-      <animated.mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.randomCube0.geometry}
-        material={material}
-      />
-      <animated.mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.randomCube1.geometry}
-        material={material}
-      />
-      <animated.mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.randomCube2.geometry}
-        material={material}
-      />
-      <animated.mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.randomCube3.geometry}
-        material={material}
-      />
-      <animated.mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.randomCube4.geometry}
-        material={material}
-      />
-      <animated.mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.randomCube5.geometry}
-        material={material}
-      />
+      <CubeFloat>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.randomCube0.geometry}
+          material={material}
+        />
+      </CubeFloat>
+
+      <CubeFloat>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.randomCube3.geometry}
+          material={material}
+        />
+      </CubeFloat>
+      <CubeFloat>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.randomCube4.geometry}
+          material={material}
+        />
+      </CubeFloat>
+      <CubeFloat>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.randomCube5.geometry}
+          material={material}
+        />
+      </CubeFloat>
     </>
   );
 };
@@ -257,7 +281,7 @@ const Bulb = ({ nodes, materials }: SubModelProps) => {
     color: bulbColor,
     roughness: 1,
     emissive: bulbColor,
-    emissiveIntensity: 1,
+    emissiveIntensity: 2,
     clearcoat: 1,
   });
 
@@ -267,8 +291,19 @@ const Bulb = ({ nodes, materials }: SubModelProps) => {
     emissive: 1,
   });
 
+  const floatSpeed = useMemo(() => {
+    return Math.random() + 1;
+  }, []);
+
   return (
-    <>
+    <Float
+      position={[0, 0, 0]}
+      floatingRange={[0, 0.25]}
+      rotation={[Math.PI / 8, 0, 0]}
+      rotationIntensity={1}
+      floatIntensity={1}
+      speed={floatSpeed}
+    >
       <mesh
         castShadow
         receiveShadow
@@ -281,7 +316,7 @@ const Bulb = ({ nodes, materials }: SubModelProps) => {
         geometry={nodes.bulb_2.geometry}
         material={holderMaterial}
       />
-    </>
+    </Float>
   );
 };
 const TrackPad = ({ nodes, materials }: SubModelProps) => {
@@ -353,7 +388,7 @@ const TextBlock = ({ nodes, materials }: SubModelProps) => {
 };
 const LatteCup = ({ nodes, materials }: SubModelProps) => {
   const { lid } = useControls("LatteCup", {
-    lid: color.RED,
+    lid: color.LATTE_LID_RED,
   });
 
   const lidMaterial = new MeshPhysicalMaterial({
@@ -462,15 +497,13 @@ const ColorCards = ({ nodes, materials }: SubModelProps) => {
 };
 const Background = ({ nodes, materials }: SubModelProps) => {
   const { bgColor } = useControls("background", {
-    bgColor: color.WHITE,
+    bgColor: color.BACKGROUND,
   });
 
   const bgMaterial = new MeshPhysicalMaterial({
     color: bgColor,
-    transmission: 1,
-    ior: 1.5,
     clearcoat: 1,
-    roughness: 0.9,
+    roughness: 1,
   });
 
   return (
@@ -509,8 +542,8 @@ export const Model = (props: GroupProps) => {
   ) as unknown as SubModelProps;
 
   const { modelPosition, modelRotation } = useControls("modelSettings", {
-    modelPosition: [2, -0.74, 0],
-    modelRotation: [0, -0.5, 0],
+    modelPosition: [0, 0, 0],
+    modelRotation: [0, 0, 0],
   });
 
   const [, startTransition] = useTransition();
@@ -551,6 +584,7 @@ export const Model = (props: GroupProps) => {
       <Dropper nodes={nodes} materials={materials} />
 
       <Pen nodes={nodes} materials={materials} />
+
       <LatteCup nodes={nodes} materials={materials} />
       <NoteBook nodes={nodes} materials={materials} />
       <ColorCards nodes={nodes} materials={materials} />

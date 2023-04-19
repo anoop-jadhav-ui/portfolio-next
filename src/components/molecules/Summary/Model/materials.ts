@@ -1,5 +1,3 @@
-import { MeshStandardMaterial } from "three";
-
 export const color = {
   WHITE: "#fff",
   BLACK: "#3e3e3e",
@@ -11,13 +9,22 @@ export const color = {
 
   PURPLE: "#b283ff",
   ORANGE: "#ff8154",
-  BLUE: "#0052ce",
+  BLUE: "#6e82ff",
   DARK_BLUE: "#0052ce",
   TEXTBLOCK_BLUE: "#5e77d1",
 
-  TEXTBLOCK_RED: "#c70000",
+  DROPPER_RED: "#ff3333",
+
+  PEN_RED: "#f55151",
+
+  TEXTBLOCK_RED: "#f55151",
+  LATTE_LID_RED: "#e54848",
 
   NOTEBOOK_YELLOW: "#ffbe4d",
-  NOTEBOOK_RUBBER: "#6cc7bd",
-  NOTEBOOK_COVER: "#5c6daa",
+  NOTEBOOK_RUBBER: "#3e65db",
+  NOTEBOOK_COVER: "#677ce2",
+
+  BACKGROUND: "#d1a3ff",
+
+  CUBE_COLOR: "#ebdfff",
 };

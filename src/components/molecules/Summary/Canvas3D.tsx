@@ -23,7 +23,10 @@ function Canvas3D({
         style={{ ...style, zIndex: isDebugMode ? "1" : "-1" }}
         frameloop={frameloop}
         dpr={windowObj?.devicePixelRatio}
+        flat
+        camera={{ fov: 25, position: [0, 0, 20] }}
       >
+        {/* <color attach="background" args={["#e0b7ff"]} /> */}
         {children}
       </Canvas>
     </>
