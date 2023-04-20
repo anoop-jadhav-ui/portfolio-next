@@ -25,6 +25,7 @@ export const color = {
   NOTEBOOK_COVER: "#677ce2",
 
   BACKGROUND: "#d1a3ff",
+  BULB_COLOR: "#f8c647",
 
   CUBE_COLOR: "#ebdfff",
 };

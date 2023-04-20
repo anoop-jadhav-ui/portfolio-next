@@ -42,12 +42,12 @@ export default function AboutMe({ profileData }: { profileData: ProfileData }) {
       <Box component="div" sx={{ py: 4 }}>
         <Certifications />
       </Box>
-      <Box
+      {/* <Box
         component="div"
         sx={{ background: theme.palette.grey[100], pt: 4, pb: 8 }}
       >
         <Hobbies />
-      </Box>
+      </Box> */}
       <Footer />
     </Stack>
   );

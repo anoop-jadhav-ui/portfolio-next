@@ -51,7 +51,7 @@ export const CubeFloat = ({ children }: { children: ReactNode }) => {
     <Float
       position={[0, 0.5, 0]}
       floatingRange={[0, 1]}
-      rotation={[Math.PI / 3.5, 0, 0]}
+      rotation={[Math.PI / 8, 0, 0]}
       rotationIntensity={2}
       floatIntensity={1}
       speed={speed}

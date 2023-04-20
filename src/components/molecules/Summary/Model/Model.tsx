@@ -1,9 +1,11 @@
 import { animated, useSpring } from "@react-spring/three";
 import { Float, useGLTF, useProgress } from "@react-three/drei";
-import { GroupProps } from "@react-three/fiber";
+import { GroupProps, useFrame } from "@react-three/fiber";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useControls } from "leva";
-import { useEffect, useMemo, useTransition } from "react";
-import { Material, MeshPhysicalMaterial } from "three";
+import { startTransition, useEffect, useMemo, useTransition } from "react";
+import { Clock, Material, MeshPhysicalMaterial } from "three";
+
 import { color } from "./materials";
 import { CubeFloat } from "./ModelAnimationUtils";
 
@@ -29,10 +31,13 @@ const Monitor = ({ nodes, materials }: SubModelProps) => {
   const darkMaterial = new MeshPhysicalMaterial({
     color: dark,
     roughness: 1,
+    clearcoat: 1,
   });
   const greyMaterial = new MeshPhysicalMaterial({
     color: grey,
     flatShading: true,
+    clearcoat: 1,
+    roughness: 1,
   });
   const screenMaterial = new MeshPhysicalMaterial({
     color: screen,
@@ -141,6 +146,7 @@ const Dropper = ({ nodes, materials }: SubModelProps) => {
   const dropperHolderMaterial = new MeshPhysicalMaterial({
     color: dropperHolderColor,
     roughness: 1,
+    clearcoat: 1,
   });
 
   const floatSpeed = useMemo(() => {
@@ -183,8 +189,16 @@ const Pen = ({ nodes, materials }: SubModelProps) => {
     penColor: color.BLACK,
   });
 
-  const accentMaterial = new MeshPhysicalMaterial({ color: accentColor });
-  const penMaterial = new MeshPhysicalMaterial({ color: penColor });
+  const accentMaterial = new MeshPhysicalMaterial({
+    color: accentColor,
+    clearcoat: 1,
+    roughness: 1,
+  });
+  const penMaterial = new MeshPhysicalMaterial({
+    color: penColor,
+    clearcoat: 1,
+    roughness: 1,
+  });
 
   const floatSpeed = useMemo(() => {
     return Math.random() + 1;
@@ -222,7 +236,6 @@ const Pen = ({ nodes, materials }: SubModelProps) => {
     </Float>
   );
 };
-
 const Cubes = ({ nodes, materials }: SubModelProps) => {
   const { cubeColor } = useControls("Cubes", {
     cubeColor: color.CUBE_COLOR,
@@ -230,7 +243,8 @@ const Cubes = ({ nodes, materials }: SubModelProps) => {
 
   const material = new MeshPhysicalMaterial({
     color: cubeColor,
-    roughness: 0.1,
+    roughness: 1,
+    clearcoat: 1,
   });
 
   return (
@@ -243,7 +257,6 @@ const Cubes = ({ nodes, materials }: SubModelProps) => {
           material={material}
         />
       </CubeFloat>
-
       <CubeFloat>
         <mesh
           castShadow
@@ -272,27 +285,33 @@ const Cubes = ({ nodes, materials }: SubModelProps) => {
   );
 };
 const Bulb = ({ nodes, materials }: SubModelProps) => {
+  const [spring, api] = useSpring(() => ({ emissiveIntensity: 1 }), []);
   const { bulbColor, holderColor } = useControls("Bulb", {
     bulbColor: "#ff8e4d",
     holderColor: "#5f5f5f",
-  });
-
-  const yellowEmissiveMaterial = new MeshPhysicalMaterial({
-    color: bulbColor,
-    roughness: 1,
-    emissive: bulbColor,
-    emissiveIntensity: 2,
-    clearcoat: 1,
   });
 
   const holderMaterial = new MeshPhysicalMaterial({
     color: holderColor,
     roughness: 1,
     emissive: 1,
+    clearcoat: 1,
   });
 
   const floatSpeed = useMemo(() => {
     return Math.random() + 1;
+  }, []);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    const blink = () => {
+      api.start({
+        emissiveIntensity: Math.floor(Math.random() * 4) + 1,
+      });
+      timeout = setTimeout(blink, (0.5 + Math.random() * 2) * 1000);
+    };
+    blink();
+    return () => void clearTimeout(timeout);
   }, []);
 
   return (
@@ -304,12 +323,16 @@ const Bulb = ({ nodes, materials }: SubModelProps) => {
       floatIntensity={1}
       speed={floatSpeed}
     >
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.bulb_1.geometry}
-        material={yellowEmissiveMaterial}
-      />
+      <animated.mesh castShadow receiveShadow geometry={nodes.bulb_1.geometry}>
+        {/* @ts-ignore */}
+        <animated.meshPhysicalMaterial
+          color={bulbColor}
+          roughness={1}
+          emissive={bulbColor}
+          emissiveIntensity={spring.emissiveIntensity}
+          clearcoat={1}
+        />
+      </animated.mesh>
       <mesh
         castShadow
         receiveShadow
@@ -328,6 +351,7 @@ const TrackPad = ({ nodes, materials }: SubModelProps) => {
   const whiteMaterial = new MeshPhysicalMaterial({
     color: white,
     roughness: 1,
+    clearcoat: 1,
   });
   const greyMaterial = new MeshPhysicalMaterial({
     color: grey,
@@ -358,9 +382,11 @@ const TextBlock = ({ nodes, materials }: SubModelProps) => {
 
   const redMaterial = new MeshPhysicalMaterial({
     color: red,
+    clearcoat: 1,
   });
   const blueMaterial = new MeshPhysicalMaterial({
     color: blue,
+    clearcoat: 1,
   });
 
   return (
@@ -393,6 +419,8 @@ const LatteCup = ({ nodes, materials }: SubModelProps) => {
 
   const lidMaterial = new MeshPhysicalMaterial({
     color: lid,
+    clearcoat: 1,
+    roughness: 1,
   });
 
   return (
@@ -425,18 +453,28 @@ const NoteBook = ({ nodes, materials }: SubModelProps) => {
   );
   const bookmark1Material = new MeshPhysicalMaterial({
     color: bookmark1,
+    clearcoat: 1,
+    roughness: 1,
   });
   const rubberMaterial = new MeshPhysicalMaterial({
     color: rubber,
+    clearcoat: 1,
+    roughness: 1,
   });
   const coverMaterial = new MeshPhysicalMaterial({
     color: cover,
+    clearcoat: 1,
+    roughness: 1,
   });
   const pagesMaterial = new MeshPhysicalMaterial({
     color: pages,
+    clearcoat: 1,
+    roughness: 1,
   });
   const bookmark2Material = new MeshPhysicalMaterial({
     color: bookmark2,
+    clearcoat: 1,
+    roughness: 1,
   });
   return (
     <mesh

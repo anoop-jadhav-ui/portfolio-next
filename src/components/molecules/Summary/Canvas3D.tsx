@@ -1,7 +1,7 @@
 import { useDebugger } from "@/hooks/useDebugger";
 import { useWindowObject } from "@/hooks/useWindowObject";
 import { Canvas } from "@react-three/fiber";
-import { Leva } from "leva";
+import { Leva, useControls } from "leva";
 import { CSSProperties, ReactNode } from "react";
 
 function Canvas3D({
@@ -27,6 +27,7 @@ function Canvas3D({
         camera={{ fov: 25, position: [0, 0, 20] }}
       >
         {/* <color attach="background" args={["#e0b7ff"]} /> */}
+        {/* <color attach="background" args={["#ffd9d9"]} /> */}
         {children}
       </Canvas>
     </>
