@@ -50,7 +50,7 @@ export default function MyApp(props: MyAppProps) {
             }
           `}
         </style>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        {/* CssBaseline kickstart1 an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <GlobalContextProvider>
           <Component {...pageProps} />

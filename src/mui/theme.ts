@@ -112,13 +112,6 @@ const theme = extendTheme({
         },
       },
     },
-    // MuiOutlinedInput: {
-    //   styleOverrides: {
-    //     root: {
-    //       // borderRadius: 0,
-    //     },
-    //   },
-    // },
   },
 });
 

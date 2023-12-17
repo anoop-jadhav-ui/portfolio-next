@@ -27,5 +27,5 @@ export const color = {
   BACKGROUND: "#d1a3ff",
   BULB_COLOR: "#f8c647",
 
-  CUBE_COLOR: "#ebdfff",
+  CUBE_COLOR: "#dfdefc",
 };

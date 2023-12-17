@@ -18,6 +18,11 @@ export default function ContactMeForm() {
 
   const { showBanner } = useAlertBanner();
 
+  const clearForm = () => {
+    setMessage("");
+    setName("");
+  };
+
   const sendMessage = async () => {
     try {
       setIsSendingMessage(true);
@@ -39,6 +44,7 @@ export default function ContactMeForm() {
       console.log(e);
     } finally {
       setIsSendingMessage(false);
+      clearForm();
     }
   };
 

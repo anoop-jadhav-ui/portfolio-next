@@ -1,9 +1,8 @@
+import { PortfolioModel } from "@/components/organisms/PortfolioModel/PortfolioModel";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import Canvas3D from "./Canvas3D";
 import S from "./Summary.module.css";
-import { SummaryPageModel } from "./SummaryPageModel";
 
 export default function Summary() {
   return (
@@ -58,19 +57,7 @@ export default function Summary() {
             </Stack>
           </Grid>
           <Grid item xs={4}>
-            <Canvas3D
-              style={{
-                height: "100%",
-                position: "absolute",
-                width: "100%",
-                right: 0,
-                top: 0,
-                pointerEvents: "auto",
-              }}
-              frameloop="demand"
-            >
-              <SummaryPageModel />
-            </Canvas3D>
+            <PortfolioModel />
           </Grid>
         </Grid>
       </Container>

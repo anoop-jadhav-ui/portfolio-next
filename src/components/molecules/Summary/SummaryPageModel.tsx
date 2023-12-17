@@ -3,7 +3,6 @@ import { useDebugger } from "@/hooks/useDebugger";
 import { Center, OrbitControls, PresentationControls } from "@react-three/drei";
 import { useControls } from "leva";
 import { Suspense } from "react";
-import { Color, DirectionalLight } from "three";
 import { Model } from "./Model/Model";
 
 export function SummaryPageModel() {
@@ -24,6 +23,11 @@ export function SummaryPageModel() {
     intensity: 1,
   });
 
+  const hemisphereLight = useControls("Hemisphere Light", {
+    color1: "#ffeded",
+    color2: "#a275ce",
+  });
+
   const isDebugMode = useDebugger();
 
   return (
@@ -36,16 +40,11 @@ export function SummaryPageModel() {
         polar={[0, Math.PI / 6]}
         azimuth={[-Math.PI / 6, Math.PI / 6]}
       >
-        <directionalLight {...directionalLight} />
-        <rectAreaLight
-          width={areaLight.width}
-          height={areaLight.height}
-          position={areaLight.position}
-          intensity={areaLight.intensity}
-          color={new Color(areaLight.color)}
+        <hemisphereLight
+          args={[hemisphereLight.color1, hemisphereLight.color2, 1]}
         />
+        <directionalLight {...directionalLight} />
         <ambientLight intensity={ambientLight.intensity} />
-
         <Suspense fallback={<Loader3D />}>
           <Center position={[2, -1.5, -1]}>
             <Model />

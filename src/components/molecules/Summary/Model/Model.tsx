@@ -236,7 +236,7 @@ const Pen = ({ nodes, materials }: SubModelProps) => {
     </Float>
   );
 };
-const Cubes = ({ nodes, materials }: SubModelProps) => {
+const Cubes = ({ nodes }: SubModelProps) => {
   const { cubeColor } = useControls("Cubes", {
     cubeColor: color.CUBE_COLOR,
   });
