@@ -24,7 +24,7 @@ const Bulb = ({ nodes }: SubModelProps) => {
   }, []);
 
   useEffect(() => {
-    let timeout: number;
+    let timeout: NodeJS.Timeout;
     const blink = () => {
       api.start({
         emissiveIntensity: Math.floor(Math.random() * 4) + 1,

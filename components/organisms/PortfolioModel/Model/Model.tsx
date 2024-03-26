@@ -4,7 +4,7 @@ import { useControls } from "leva";
 import React, { useEffect, useRef, useTransition } from "react";
 import { Group, Material } from "three";
 import { GLTF } from "three-stdlib";
-
+import * as THREE from "three";
 const Background = React.lazy(() => import("./atoms/Background"));
 const Bulb = React.lazy(() => import("./atoms/Bulb"));
 const ColorCards = React.lazy(() => import("./atoms/ColorCards"));
@@ -96,7 +96,7 @@ type GLTFResult = GLTF & {
 
 const Model = () => {
   const { nodes, materials } = useGLTF(
-    "/assets/3dmodels/portfolio-transformed.glb",
+    "/assets/3dmodels/portfolio-transformed.glb"
   ) as GLTFResult;
 
   const { modelPosition, modelRotation } = useControls("modelSettings", {
