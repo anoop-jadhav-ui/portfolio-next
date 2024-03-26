@@ -1,6 +1,28 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:@react-three/recommended"
+  ],
   "rules": {
-    "react/display-name": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unknown-property": ["off", { "ignore": ["JSX"] }]
+  },
+  "plugins": ["@typescript-eslint", "react", "@react-three"],
+  "parser": "@typescript-eslint/parser",
+
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
   }
 }
